@@ -33,7 +33,7 @@ public class OfferController {
     public String getOffers(Model model){
 
         List<OfferIndexView> offers = offerService.getAllOffers();
-        model.addAttribute("offers" , offers);
+        model.addAttribute("offer" , offers);
 
         return "offers";
     }
