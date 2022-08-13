@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:include= "~{/fragments/head}"/>
+    <title>HappyTravel</title>
+</head>
+<body>
+
+<th:block th:include="~{/fragments/header}" />
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card" style="margin-top: 50px;">
+                <div class="card-header">Register</div>
+                <div class="card-body">
+
+                    <form class="form-horizontal" th:action="@{/register}" th:method="post" th:object="${userRegistrationDTO}">
+
+                        <div class="form-group">
+                            <label for="name" class="cols-sm-2 control-label">Your Name</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                    <input th:field="*{fullName}" th:errorclass="is-invalid" type="text"
+                                           required minlength="5" maxlength="30" class="form-control" name="fullName" id="name" placeholder="Enter your Name" />
+                                </div>
+                                <small th:if="${#fields.hasErrors('fullName')}"> Full name length must be between 5 and 30 characters.</small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="cols-sm-2 control-label">Your Email</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                                    <input th:field="*{email}"type="text" class="form-control" name="email" id="email" placeholder="Enter your Email" />
+                                </div>
+                                <small th:if="${#fields.hasErrors('email')}"> Must be valid email </small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="username" class="cols-sm-2 control-label">Username</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+                                    <input th:field="*{username}"type="text" class="form-control" name="username" id="username" placeholder="Enter your Username" />
+                                </div>
+                                <small th:if="${#fields.hasErrors('username')}"> Username length must be at least 5
+                                    characters </small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="cols-sm-2 control-label">Password</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                                    <input th:field="*{password}" type="password" class="form-control" name="password" id="password" placeholder="Enter your Password" />
+                                </div>
+                                <small th:if="${#fields.hasErrors('password')}"> Password length must be between 5 and 20 characters and passwords should match. </small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm" class="cols-sm-2 control-label">Confirm Password</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                                    <input th:field="*{confirmPassword}" type="password" class="form-control" name="confirmPassword" id="confirm" placeholder="Confirm your Password" />
+                                </div>
+                                <small th:if="${#fields.hasErrors('confirmPassword')}"> Password length must be between 5 and 20 characters and passwords should match. </small>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Register</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+<style>
+   body {
+     background-image: url('https://www.oliverstravels.com/blog/wp-content/uploads/2020/02/Things-to-do-in-Mykonos.png');
+     background-position: center center;
+     background-repeat: no-repeat;
+     background-attachment: fixed;
+     background-size: cover;
+     background-color: #464646;
+ }
+
+
+
+</style>

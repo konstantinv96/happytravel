@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include= "~{/fragments/head}"/>
+    <title>HappyTravel</title>
+</head>
+<body>
+<th:block th:include="~{/fragments/header}" />
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card" style="margin-top: 50px;">
+                <div class="card-header">Add Offer</div>
+                <div class="card-body">
+
+                    <form class="form-horizontal" th:action="@{/offers/add}" th:method="post" th:object="${addOfferDTO}" >
+                        <div class="form-group col-md-6 mb-3">
+                            <label class="text-center text-white font-weight-bold" >Country</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                    <input   th:field="*{country}" type="text"
+                                            class="form-control" name="country" id="country" placeholder="Enter country" />
+                                </div>
+                                <small th:if="${#fields.hasErrors('country')}"> Username length must be at least 5
+                                    characters </small>
+                            </div>
+
+
+                            <label class="text-center text-white font-weight-bold" >City</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                    <input   th:field="*{city}" type="text"
+                                             class="form-control" name="city" id="city" placeholder="Enter city" />
+                                </div>
+                                <small th:if="${#fields.hasErrors('city')}"> Username length must be at least 5
+                                    characters </small>
+                            </div>
+
+                            <label class="text-center text-white font-weight-bold" >Price</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                    <input   th:field="*{price}" type="number"
+                                             class="form-control" name="price" id="price" placeholder="Enter price" />
+                                </div>
+                                <small th:if="${#fields.hasErrors('price')}"> Username length must be at least 5
+                                    characters </small>
+                            </div>
+
+                            <label class="text-center text-white font-weight-bold" >Offer Name</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                    <input   th:field="*{name}" type="text"
+                                             class="form-control" name="name" id="name" placeholder="Enter name" />
+                                </div>
+                                <small th:if="${#fields.hasErrors('name')}"> Username length must be at least 5
+                                    characters </small>
+                            </div>
+
+                            <label class="text-center text-white font-weight-bold" >Overnight stays</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                    <input   th:field="*{overnightStays}" type="number"
+                                             class="form-control" name="overnightStays" id="overnightStays"  />
+                                </div>
+                                <small th:if="${#fields.hasErrors('overnightStays')}"> Username length must be at least 5
+                                    characters </small>
+                            </div>
+
+                            <label class="text-center text-white font-weight-bold" >Image URL</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                    <input   th:field="*{imageUrl}" type="text"
+                                             class="form-control" name="imageUrl" id="imageUrl"  placeholder="Please, enter image url" />
+                                </div>
+                                <small th:if="${#fields.hasErrors('imageUrl')}"> Username length must be at least 5
+                                    characters </small>
+                            </div>
+                            <div class="cols-sm-10">
+                                <label class="text-center text-white font-weight-bold" >Transport Type</label>
+                                <select
+                                        id="transportType"
+                                        name="transportType"
+                                        th:errorclass="is-invalid"
+                                        class="form-control">
+                                    <option value="">- Select transport type -</option>
+                                    <option th:each="e : ${T(bg.softuni.happytravel.model.enums.TransportType).values()}"
+                                            th:text="${e}"
+                                            th:value="${e}"
+                                            th:selected="${e} == *{transportType}">
+                                        Transport Type
+                                    </option>
+                                </select>
+                                <p class="invalid-feedback errors alert alert-danger">
+                                    Transport type is required.
+                                </p>
+                                <div class="cols-sm-10">
+
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class='col-sm-6'>
+                                                <div class="form-group">
+                                                    <div class='input-group date' id='datetimepicker1'>
+                                                        <input type='text' class="form-control" />
+                                                        <span class="input-group-addon">
+               <span class="glyphicon glyphicon-calendar"></span>
+               </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+
+                        </div>
+<!--                        <div class="row">-->
+<!--                            <div class="col col-md-4">-->
+<!--                                <div class="button-holder d-flex">-->
+<!--                                    <input type="submit" class="btn btn-info btn-lg" value="Submit Offer"/>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>
+<script type="text/javascript">
+         $(function () {
+             $('#datetimepicker1').datetimepicker();
+         });
+      </script>
+<style>
+   body {
+     background-image: url('https://www.oliverstravels.com/blog/wp-content/uploads/2020/02/Things-to-do-in-Mykonos.png');
+     background-position: center center;
+     background-repeat: no-repeat;
+     background-attachment: fixed;
+     background-size: cover;
+     background-color: #464646;
+ }
+</style>
