@@ -5,9 +5,11 @@ import bg.softuni.happytravel.model.Offer;
 import bg.softuni.happytravel.model.Picture;
 import bg.softuni.happytravel.model.UserEntity;
 import bg.softuni.happytravel.model.dto.AddOfferDTO;
+import bg.softuni.happytravel.model.dto.SearchOfferDTO;
 import bg.softuni.happytravel.model.views.OfferDetailsView;
 import bg.softuni.happytravel.model.views.OfferIndexView;
 import bg.softuni.happytravel.repository.OfferRepository;
+import bg.softuni.happytravel.repository.OfferSpecification;
 import bg.softuni.happytravel.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -61,10 +63,19 @@ public class OfferService {
                                 addOfferDTO.getPictureUrls()
                                 );
 
-        UserEntity agencyName = userRepository.findByEmail(userDetails.getUsername()).orElseThrow();
+        UserEntity agencyName = userRepository.findByUsername(userDetails.getUsername()).orElseThrow();
 
         offer.setAgencyName(agencyName);
         offerRepository.save(offer);
 
     }
+
+    public List<OfferIndexView> searchOffer(SearchOfferDTO searchOfferDTO){
+        return this.offerRepository.findAll(new OfferSpecification(searchOfferDTO)).stream().map(offer ->new OfferIndexView(
+                offer.getId(),
+                offer.getName(),offer.getOvernightStays(),offer.getCheckInDate(),
+                offer.getReturnDate(),offer.getPrice(),offer.getImageUrl()
+        )).collect(Collectors.toList());
+    }
+
 }

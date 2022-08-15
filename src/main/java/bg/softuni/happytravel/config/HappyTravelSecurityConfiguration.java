@@ -28,7 +28,8 @@ public class HappyTravelSecurityConfiguration {
                 authorizeRequests().requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .antMatchers("/").permitAll()
                 .antMatchers("/login" , "/register").anonymous()
-                .antMatchers("/profile" , "/api/**" , "offers/**").authenticated()
+                .antMatchers("/profile" , "/api/**","offers/**").authenticated()
+                .antMatchers("/offers/add").authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
@@ -39,8 +40,6 @@ public class HappyTravelSecurityConfiguration {
                 .and()
                 .logout()
                 .logoutUrl("/logout")
-                .clearAuthentication(true)
-                .deleteCookies("JSESSIONID")
                 .logoutSuccessUrl("/")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID");

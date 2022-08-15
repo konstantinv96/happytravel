@@ -16,74 +16,68 @@
 
                     <form class="form-horizontal" th:action="@{/offers/add}" th:method="post" th:object="${addOfferDTO}" >
                         <div class="form-group col-md-6 mb-3">
-                            <label class="text-center text-white font-weight-bold" >Country</label>
+                            <label class="text-center  font-weight-bold" >Country</label>
                             <div class="cols-sm-10">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
                                     <input   th:field="*{country}" type="text"
                                             class="form-control" name="country" id="country" placeholder="Enter country" />
                                 </div>
-                                <small th:if="${#fields.hasErrors('country')}"> Username length must be at least 5
-                                    characters </small>
+                                <small th:if="${#fields.hasErrors('country')}"> Please, enter country name. </small>
                             </div>
 
 
-                            <label class="text-center text-white font-weight-bold" >City</label>
+                            <label class="text-center  font-weight-bold" >City</label>
                             <div class="cols-sm-10">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
                                     <input   th:field="*{city}" type="text"
                                              class="form-control" name="city" id="city" placeholder="Enter city" />
                                 </div>
-                                <small th:if="${#fields.hasErrors('city')}"> Username length must be at least 5
-                                    characters </small>
+                                <small th:if="${#fields.hasErrors('city')}"> Please, enter city name. </small>
                             </div>
 
-                            <label class="text-center text-white font-weight-bold" >Price</label>
+                            <label class="text-center  font-weight-bold" >Price</label>
                             <div class="cols-sm-10">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
                                     <input   th:field="*{price}" type="number"
                                              class="form-control" name="price" id="price" placeholder="Enter price" />
                                 </div>
-                                <small th:if="${#fields.hasErrors('price')}"> Username length must be at least 5
-                                    characters </small>
+                                <small th:if="${#fields.hasErrors('price')}"> Please, select a price. </small>
                             </div>
 
-                            <label class="text-center text-white font-weight-bold" >Offer Name</label>
+                            <label class="text-center  font-weight-bold" >Offer Name</label>
                             <div class="cols-sm-10">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
                                     <input   th:field="*{name}" type="text"
                                              class="form-control" name="name" id="name" placeholder="Enter name" />
                                 </div>
-                                <small th:if="${#fields.hasErrors('name')}"> Username length must be at least 5
-                                    characters </small>
+                                <small th:if="${#fields.hasErrors('name')}"> Please, enter offer name </small>
                             </div>
 
-                            <label class="text-center text-white font-weight-bold" >Overnight stays</label>
+                            <label class="text-center  font-weight-bold" >Overnight stays</label>
                             <div class="cols-sm-10">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
                                     <input   th:field="*{overnightStays}" type="number"
                                              class="form-control" name="overnightStays" id="overnightStays"  />
                                 </div>
-                                <small th:if="${#fields.hasErrors('overnightStays')}"> Username length must be at least 5
-                                    characters </small>
+                                <small th:if="${#fields.hasErrors('overnightStays')}"> Please, enter overnight stays.</small>
                             </div>
 
-                            <label class="text-center text-white font-weight-bold" >Image URL</label>
+                            <label class="text-center  font-weight-bold" >Image URL</label>
                             <div class="cols-sm-10">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
                                     <input   th:field="*{imageUrl}" type="text"
                                              class="form-control" name="imageUrl" id="imageUrl"  placeholder="Please, enter image url" />
                                 </div>
-                                <small th:if="${#fields.hasErrors('imageUrl')}"> Username length must be at least 5
-                                    characters </small>
+                                <small th:if="${#fields.hasErrors('imageUrl')}"> Please, enter image URL. </small>
                             </div>
-                            <div class="cols-sm-10">
-                                <label class="text-center text-white font-weight-bold" >Transport Type</label>
+                            <div class="cols-sm-10" style="margin-bottom: 15px;">
+                                <label class="text-center  font-weight-bold" >Transport Type</label>
                                 <select
                                         id="transportType"
                                         name="transportType"
@@ -100,40 +94,44 @@
                                 <p class="invalid-feedback errors alert alert-danger">
                                     Transport type is required.
                                 </p>
-                                <div class="cols-sm-10">
+                            </div>
 
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class='col-sm-6'>
-                                                <div class="form-group">
-                                                    <div class='input-group date' id='datetimepicker1'>
-                                                        <input type='text' class="form-control" />
-                                                        <span class="input-group-addon">
-               <span class="glyphicon glyphicon-calendar"></span>
-               </span>
-                                                    </div>
-                                                </div>
-                                            </div>
+                            <div class="cols-sm-10" style="margin-bottom: 15px;">
+                            <label for="start">Check in date:</label>
 
-                                        </div>
-                                    </div>
+                            <input type="date" id="checkInDate" name="checkInDate"
+                                   th:field="*{checkInDate}">
+
+                            </div>
+                            <div class="cols-sm-10" >
+                                <label for="start">Return date:</label>
+
+                                <input type="date" id="returnDate" name="returnDate"
+                                   th:field="*{returnDate}"
+                                   >
+                            </div>
+
+                            <div class="cols-sm-10">
+                                <label class="text-center  font-weight-bold" >Description</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                    <input   th:field="*{description}" type="text"
+                                             class="form-control" name="description" id="description"   />
+                                </div>
+                                <small th:if="${#fields.hasErrors('description')}"> Please, enter a description .</small>
+                            </div>
+                            <div class="form-group" style="margin-top: 15px;">
+                                <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Upload</button>
+                            </div>
 
 
 
-                        </div>
-<!--                        <div class="row">-->
-<!--                            <div class="col col-md-4">-->
-<!--                                <div class="button-holder d-flex">-->
-<!--                                    <input type="submit" class="btn btn-info btn-lg" value="Submit Offer"/>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
 
 
 
                     </form>
                 </div>
-
+                </div>
             </div>
         </div>
     </div>
@@ -144,9 +142,7 @@
 </body>
 </html>
 <script type="text/javascript">
-         $(function () {
-             $('#datetimepicker1').datetimepicker();
-         });
+
       </script>
 <style>
    body {

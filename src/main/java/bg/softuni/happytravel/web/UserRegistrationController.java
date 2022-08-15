@@ -43,8 +43,6 @@ public class UserRegistrationController {
     public String doRegister(@Valid UserRegistrationDTO userRegistrationDTO,
                              BindingResult bindingResult , RedirectAttributes redirectAttributes){
 
-        System.out.println(userRegistrationDTO.toString());
-
         if(bindingResult.hasErrors()){
 
             redirectAttributes.addFlashAttribute("userRegistrationDTO", userRegistrationDTO);

@@ -2,9 +2,9 @@ package bg.softuni.happytravel.web;
 
 
 import bg.softuni.happytravel.model.dto.AddOfferDTO;
+import bg.softuni.happytravel.model.dto.SearchOfferDTO;
 import bg.softuni.happytravel.model.views.OfferDetailsView;
 import bg.softuni.happytravel.model.views.OfferIndexView;
-import bg.softuni.happytravel.service.HappyTravelUserDetailService;
 import bg.softuni.happytravel.service.OfferService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,7 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -40,7 +39,9 @@ public class OfferController {
 
     @GetMapping("offers/add")
     public String addOffer(Model model){
-        model.addAttribute("addOfferDTO", new AddOfferDTO());
+        if(!model.containsAttribute("addOfferDTO")){
+            model.addAttribute("addOfferDTO", new AddOfferDTO());
+        }
         return "offer-add";
     }
 
@@ -59,19 +60,11 @@ public class OfferController {
 
         offerService.addOffer(addOfferDTO, userDetails);
 
-        return "redirect:/offers/all";
+        return "redirect:/";
     }
 
 
-
-
-
-
-
-
-
-
-    @GetMapping("/details/{id}")
+    @GetMapping("offers/details/{id}")
     public String getOffer(@PathVariable("id") Long offerId, Model model){
 
         OfferDetailsView offer = offerService.getOffer(offerId);
@@ -80,4 +73,31 @@ public class OfferController {
         return "offer-details";
     }
 
+//    @GetMapping("/offers/search")
+//    public String search(){
+//
+//        return "offers-search";
+//    }
+    @GetMapping("/offers/search")
+    public String searchQuery(@Valid SearchOfferDTO searchOfferDTO,
+                              BindingResult bindingResult,
+                              RedirectAttributes redirectAttributes , Model model){
+
+        if(bindingResult.hasErrors()){
+            redirectAttributes.addAttribute("searchOfferDTO" , searchOfferDTO);
+            redirectAttributes.addAttribute("org.springframework.validation.BindingResult.searchOfferDTO",bindingResult);
+
+            return "offer-search";
+        }
+
+        if(!model.containsAttribute("searchOfferDTO")){
+            model.addAttribute("searchOfferDTO", searchOfferDTO);
+        }
+        if(!searchOfferDTO.isEmpty()){
+            model.addAttribute("offers" , offerService.searchOffer(searchOfferDTO));
+        }
+
+
+        return "offer-search";
+    }
 }

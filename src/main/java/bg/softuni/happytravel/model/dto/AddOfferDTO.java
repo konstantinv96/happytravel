@@ -2,12 +2,11 @@ package bg.softuni.happytravel.model.dto;
 
 import bg.softuni.happytravel.model.Picture;
 import bg.softuni.happytravel.model.enums.TransportType;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Enumerated;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Positive;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -15,10 +14,13 @@ import java.util.List;
 public class AddOfferDTO {
 
     @NotBlank
-//    @Pattern()
+    @Size(min = 3 , max = 20)
+    @Pattern(regexp = "^[A-Za-z]+$",message = "Please enter country name that contains only letters")
     private String country;
 
     @NotBlank
+    @Size(min = 3 ,max = 20)
+    @Pattern(regexp = "^[A-Za-z]+$",message = "Please enter city name that contains only letters")
     private String city;
 
     @Positive
@@ -26,6 +28,7 @@ public class AddOfferDTO {
     private BigDecimal price;
 
     @NotBlank
+    @Size(min = 3 ,max = 50)
     private String name;
 
     @NotNull
@@ -38,16 +41,17 @@ public class AddOfferDTO {
     @NotNull
     private TransportType transportType;
 
-    @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
     private LocalDate checkInDate;
 
-    @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
     private LocalDate returnDate;
 
     @NotBlank
     private String description;
 
-    @NotNull
     private List<Picture> pictureUrls;
 
     public AddOfferDTO() {
