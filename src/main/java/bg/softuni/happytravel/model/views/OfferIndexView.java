@@ -1,20 +1,22 @@
 package bg.softuni.happytravel.model.views;
 
-import bg.softuni.happytravel.model.enums.TransportType;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class OfferIndexView {
     private Long id;
     private String name;
+    private String country;
     private Integer overnightStays;
     private LocalDate checkInDate;
     private LocalDate returnDate;
     private BigDecimal price;
     private String imageUrl;
 
-    public OfferIndexView(Long id, String name, Integer overnightStays, LocalDate checkInDate, LocalDate returnDate, BigDecimal price, String imageUrl) {
+    private String agencyName;
+
+    public OfferIndexView(Long id, String name, Integer overnightStays,
+                          LocalDate checkInDate, LocalDate returnDate, BigDecimal price, String imageUrl, String country, String agencyName) {
         this.id = id;
         this.name = name;
         this.overnightStays = overnightStays;
@@ -22,6 +24,8 @@ public class OfferIndexView {
         this.returnDate = returnDate;
         this.price = price;
         this.imageUrl = imageUrl;
+        this.country = country;
+        this.agencyName = agencyName;
     }
 
     public Long getId() {
@@ -78,5 +82,21 @@ public class OfferIndexView {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getAgencyName() {
+        return agencyName;
+    }
+
+    public void setAgencyName(String agencyName) {
+        this.agencyName = agencyName;
     }
 }

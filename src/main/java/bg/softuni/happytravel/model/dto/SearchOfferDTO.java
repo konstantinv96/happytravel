@@ -1,7 +1,7 @@
 package bg.softuni.happytravel.model.dto;
 
 public class SearchOfferDTO {
-        String countryName;
+        String country;
         Integer minPrice;
         Integer maxPrice;
 
@@ -9,12 +9,12 @@ public class SearchOfferDTO {
     public SearchOfferDTO() {
     }
 
-    public String getCountryName() {
-        return countryName;
+    public String getCountry() {
+        return country;
     }
 
-    public void setCountryName(String countryName) {
-        this.countryName = countryName;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public Integer getMinPrice() {
@@ -34,6 +34,6 @@ public class SearchOfferDTO {
     }
 
     public boolean isEmpty(){
-        return (countryName == null || countryName.isEmpty()) && minPrice == null && maxPrice == null;
+        return (country == null || country.isEmpty()) && minPrice == null && maxPrice == null;
     }
 }

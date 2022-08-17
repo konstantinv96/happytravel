@@ -14,22 +14,22 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
-public class CommentRestController {
+public class  CommentRestController {
     CommentService commentService;
 
     public CommentRestController(CommentService commentService) {
         this.commentService = commentService;
     }
 
-    @GetMapping("/{offerId}/comments")
+    @GetMapping("offers/details/{offerId}/comments")
     public ResponseEntity<List<CommentDisplayView>> getComments(@PathVariable("offerId") Long offerId){
 
             return ResponseEntity.ok(commentService.getAllCommentsForOffer(offerId));
     }
 
+    //TODO: When posting a comment i get NumberFormatException - can not convert string to long for offerId
 
-    @PostMapping(value = "/{offerId}/comments" , consumes = "application/json", produces = "application/json")
+    @PostMapping(value = "offers/details/{offerId}/comments" , consumes = "application/json", produces = "application/json")
     public ResponseEntity<CommentDisplayView> createComment(@PathVariable("offerId") Long offerId,
                                                            @AuthenticationPrincipal UserDetails userDetails,
                                                            @RequestBody CommentMessageDTO commentDto){
@@ -39,7 +39,7 @@ public class CommentRestController {
 
         CommentDisplayView comment = commentService.createComment(commentCreationDTO);
 
-        return ResponseEntity.created(URI.create(String.format("/api/%d/comments/%d", offerId , comment.getId())))
+        return ResponseEntity.created(URI.create(String.format("/offers/details/%d/comments/%d", offerId , comment.getId())))
                 .body(comment);
 
     }

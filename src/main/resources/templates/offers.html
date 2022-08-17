@@ -26,6 +26,7 @@
                             <p class="card-text"> Check-in date: <th:block th:text="*{checkInDate}"></th:block></p>
                             <p class="card-text"> Return date: <th:block th:text="*{returnDate}"></th:block></p>
                             <p class="card-text"> Price: <th:block th:text="*{price}"> </th:block></p>
+                            <p class="card-text"> Agency name: <th:block th:text="*{agencyName}"> </th:block></p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <a class="card-link" href="#" th:href="@{/offers/details/{offerId}(offerId=*{id})}">Details</a>

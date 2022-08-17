@@ -1,6 +1,5 @@
 package bg.softuni.happytravel.service;
 
-import bg.softuni.happytravel.exceptions.OfferNotFoundException;
 import bg.softuni.happytravel.model.Offer;
 import bg.softuni.happytravel.model.Picture;
 import bg.softuni.happytravel.model.UserEntity;
@@ -15,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,20 +33,19 @@ public class OfferService {
         return offerRepository.findAll().stream().map(offer -> new OfferIndexView(
                 offer.getId(),
                 offer.getName(),offer.getOvernightStays(),offer.getCheckInDate(),
-                offer.getReturnDate(),offer.getPrice(),offer.getImageUrl()
-        )).collect(Collectors.toList());
+                offer.getReturnDate(),offer.getPrice(),offer.getImageUrl(),offer.getCountry(),
+                offer.getAgencyName().getFullName())).collect(Collectors.toList());
 
     }
 
-    public OfferDetailsView getOffer(Long id){
+    public Optional<OfferDetailsView> getOffer(Long id){
 
         return offerRepository.findById(id).map(offer -> new OfferDetailsView(
                 offer.getId(),offer.getCountry(),offer.getCity(),
                 offer.getPrice(),offer.getName(),offer.getOvernightStays(),
                 offer.getImageUrl(),offer.getTransportType(),
                 offer.getCheckInDate(),offer.getReturnDate(),
-                offer.getDescription(),offer.getPictures().stream().map(Picture::getUrl).collect(Collectors.toList())
-        )).orElseThrow(OfferNotFoundException::new);
+                offer.getDescription(),offer.getPictures().stream().map(Picture::getUrl).collect(Collectors.toList())));
     }
 
     public void addOffer(AddOfferDTO addOfferDTO , UserDetails userDetails){
@@ -71,11 +70,25 @@ public class OfferService {
     }
 
     public List<OfferIndexView> searchOffer(SearchOfferDTO searchOfferDTO){
-        return this.offerRepository.findAll(new OfferSpecification(searchOfferDTO)).stream().map(offer ->new OfferIndexView(
-                offer.getId(),
-                offer.getName(),offer.getOvernightStays(),offer.getCheckInDate(),
-                offer.getReturnDate(),offer.getPrice(),offer.getImageUrl()
-        )).collect(Collectors.toList());
+        return this.offerRepository.findAll(new OfferSpecification(searchOfferDTO))
+                .stream()
+                    .map(offer ->new OfferIndexView(
+                            offer.getId(),
+                            offer.getName(),
+                            offer.getOvernightStays(),
+                            offer.getCheckInDate(),
+                            offer.getReturnDate(),
+                            offer.getPrice(),
+                            offer.getImageUrl(),
+                            offer.getCountry(),
+                            offer.getAgencyName().getFullName())).collect(Collectors.toList());
+    }
+
+    public void deleteOfferById(Long offerId){
+
+        offerRepository.deleteById(offerId);
+
+
     }
 
 }

@@ -23,9 +23,9 @@ public class OfferSpecification implements Specification<Offer> {
 
         Predicate p = cb.conjunction();
 
-        if(searchOfferDTO.getCountryName() != null && !searchOfferDTO.getCountryName().isEmpty()){
+        if(!searchOfferDTO.getCountry().isEmpty()){
             p.getExpressions().add(
-                    cb.and(cb.equal(root.join("countryName"),searchOfferDTO.getCountryName()))
+                    cb.and(cb.equal(root.get("country"),searchOfferDTO.getCountry()))
             );
         }
         if(searchOfferDTO.getMinPrice() != null){

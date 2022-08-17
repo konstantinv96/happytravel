@@ -34,6 +34,7 @@ public class CommentService {
     public List<CommentDisplayView> getAllCommentsForOffer(Long offerId){
 
             Offer offer = offerRepository.findById(offerId).orElseThrow(OfferNotFoundException::new);
+
             List<Comment> comments = commentRepository.findAllByOffer(offer).get();
             return  comments.stream().map(comment -> new CommentDisplayView(comment.getId() , comment.getAuthor().getFullName(),
             comment.getText())).collect(Collectors.toList());
@@ -52,6 +53,7 @@ public class CommentService {
 
         commentRepository.save(comment);
 
-        return new CommentDisplayView(comment.getId(),author.getFullName() , comment.getText());
+        return new CommentDisplayView(comment.getId(),author.getFullName(),comment.getText());
+        //
     }
 }

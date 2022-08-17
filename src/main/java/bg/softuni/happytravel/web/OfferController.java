@@ -1,6 +1,7 @@
 package bg.softuni.happytravel.web;
 
 
+import bg.softuni.happytravel.exceptions.ObjectNotFoundException;
 import bg.softuni.happytravel.model.dto.AddOfferDTO;
 import bg.softuni.happytravel.model.dto.SearchOfferDTO;
 import bg.softuni.happytravel.model.views.OfferDetailsView;
@@ -11,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -67,7 +69,9 @@ public class OfferController {
     @GetMapping("offers/details/{id}")
     public String getOffer(@PathVariable("id") Long offerId, Model model){
 
-        OfferDetailsView offer = offerService.getOffer(offerId);
+        OfferDetailsView offer = offerService.getOffer(offerId).
+                orElseThrow(() -> new ObjectNotFoundException("Offer with id " + offerId + " not found!"));
+
         model.addAttribute("offer" , offer);
 
         return "offer-details";
@@ -99,5 +103,12 @@ public class OfferController {
 
 
         return "offer-search";
+    }
+
+    @DeleteMapping("/offers/{id}")
+    public String deleteOffer(@PathVariable("id") Long id){
+        offerService.deleteOfferById(id);
+
+        return "redirect:/offers";
     }
 }

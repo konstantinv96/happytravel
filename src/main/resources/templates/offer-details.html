@@ -7,6 +7,7 @@
 </head>
 <body>
     <th:block th:include="~{/fragments/header}" />
+    <input type="hidden" name="offerId" id="offerId" th:value="${offer.id}">
 
     <main role="main">
 
@@ -33,9 +34,13 @@
                                 <p class="card-text"> Price: <th:block th:text="*{price}"></th:block></p>
                                 <p class="card-text"> Description: <th:block th:text="*{description}"></th:block></p>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button"  class="btn btn-sm btn-outline-secondary">View</button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                    <div class="card-body">
+                                        <form
+                                                th:action="@{/offers/{id}(id=*{id})}"
+                                                th:method="delete"
+                                        >
+                                            <input type="submit" value="Delete">
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -43,7 +48,46 @@
                     </div>
 
                 </div>
+                <section class="comments">
+
+                    <h1>Comments</h1>
+                    <div>
+                        <!-- Comments submission -->
+                        <form id="commentForm" method="POST"
+                              action="/">
+                            <div class="form-group">
+                                <h4>Leave a comment</h4>
+                                <label for="message">Message</label>
+
+                                <textarea name="message"
+                                          id="message"
+                                          cols="30"
+                                          rows="5"
+                                          class="form-control"
+                                          style="background-color: white;"></textarea>
+                                <small id="messageError" class="invalid-feedback">
+                                    Message should be at least 10 characters.
+                                </small>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit"
+                                       class="btn"
+                                       id="postComment"
+                                       value="Post Comment"/>
+                            </div>
+                        </form>
+                        <!-- Comments submission -->
+                    </div>
+
+                    <!-- All comments section -->
+                    <div>
+                        <span id="commentCtnr"><!-- Comments section, filled in by script --></span>
+                    </div>
+                    <!-- EO: All comments section -->
+                </section>
             </div>
+            <script th:src="@{/js/comments.js}"></script>
         </div>
 
     </main>

@@ -74,4 +74,5 @@ public class Comment {
     public void setOffer(Offer offer) {
         this.offer = offer;
     }
+
 }
