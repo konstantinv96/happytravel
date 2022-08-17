@@ -7,6 +7,7 @@ import bg.softuni.happytravel.model.dto.SearchOfferDTO;
 import bg.softuni.happytravel.model.views.OfferDetailsView;
 import bg.softuni.happytravel.model.views.OfferIndexView;
 import bg.softuni.happytravel.service.OfferService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -105,8 +107,9 @@ public class OfferController {
         return "offer-search";
     }
 
+    @PreAuthorize("@offerService.isOwner(#principal.name , #id)")
     @DeleteMapping("/offers/{id}")
-    public String deleteOffer(@PathVariable("id") Long id){
+    public String deleteOffer(Principal principal, @PathVariable("id") Long id){
         offerService.deleteOfferById(id);
 
         return "redirect:/offers";

@@ -5,6 +5,7 @@ import bg.softuni.happytravel.model.Picture;
 import bg.softuni.happytravel.model.UserEntity;
 import bg.softuni.happytravel.model.dto.AddOfferDTO;
 import bg.softuni.happytravel.model.dto.SearchOfferDTO;
+import bg.softuni.happytravel.model.enums.UserRoles;
 import bg.softuni.happytravel.model.views.OfferDetailsView;
 import bg.softuni.happytravel.model.views.OfferIndexView;
 import bg.softuni.happytravel.repository.OfferRepository;
@@ -89,6 +90,24 @@ public class OfferService {
         offerRepository.deleteById(offerId);
 
 
+    }
+
+    public boolean isOwner(String userName , Long offerId){
+        boolean isOwner =  offerRepository.findById(offerId).filter(o -> o.getAgencyName()
+                .getEmail().equals(userName)).isPresent();
+
+        if (isOwner) {
+            return true;
+        }
+
+        return userRepository.findByUsername(userName).filter(this::isAdmin).isPresent();
+
+
+    }
+
+    private boolean isAdmin(UserEntity user){
+
+        return user.getRoles().stream().anyMatch(r -> r.getName() == UserRoles.ADMIN);
     }
 
 }
