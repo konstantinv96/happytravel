@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>HappyTravel</title>
+    <th:block th:include= "~{/fragments/head}"/>
+</head>
+
+<body>
+<th:block th:include="~{/fragments/header}" />
+
+<div class="container-fluid">
+    <h5 class="text-center text-white mt-5">
+        UUUUPS!!!! You have no permission to perform this operation.
+
+        Why don't you <a th:href="@{/offers/search}">search</a> for something else here?
+    </h5>
+</div>
+
+
+</body>
+</html>
+
+
+<style>
+    body {
+        background-image: url('https://www.oliverstravels.com/blog/wp-content/uploads/2020/02/Things-to-do-in-Mykonos.png');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        background-color: #464646;
+    }
+</style>

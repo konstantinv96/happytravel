@@ -12,7 +12,7 @@ async function handleFormSubmission(event) {
 
     const messageVal = document.getElementById('message').value
 
-    fetch(`http://localhost:8080/offers/details/{offerId}/comments`, {
+    fetch(`http://localhost:8080/offers/details/${offerId}/comments`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ function comementAsHtml(comment) {
     return commentHtml
 }
 
-fetch(`http://localhost:8080/offers/details/{offerId}/comments`, {
+fetch(`http://localhost:8080/offers/details/${offerId}/comments`, {
     headers: {
         "Accept": "application/json"
     }
