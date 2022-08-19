@@ -36,7 +36,11 @@
                                     <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
                                     <input th:field="*{email}"type="text" class="form-control" name="email" id="email" placeholder="Enter your Email" />
                                 </div>
-                                <small th:if="${#fields.hasErrors('email')}"> Must be valid email </small>
+                                <div
+                                        th:each="err : ${#fields.errors('email')}"
+                                        th:text="${err}"
+                                />
+                                <small th:if="${#fields.hasErrors('email')}">  </small>
                             </div>
                         </div>
                         <div class="form-group">
@@ -46,8 +50,11 @@
                                     <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
                                     <input th:field="*{username}"type="text" class="form-control" name="username" id="username" placeholder="Enter your Username" />
                                 </div>
-                                <small th:if="${#fields.hasErrors('username')}"> Username length must be at least 5
-                                    characters </small>
+                                <div
+                                        th:each="err : ${#fields.errors('username')}"
+                                        th:text="${err}"
+                                />
+                                <small th:if="${#fields.hasErrors('username')}"> </small>
                             </div>
                         </div>
                         <div class="form-group">

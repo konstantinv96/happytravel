@@ -1,5 +1,8 @@
 package bg.softuni.happytravel.model.dto;
 
+import bg.softuni.happytravel.model.validation.UniqueUserEmail;
+import bg.softuni.happytravel.model.validation.UniqueUsername;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -8,16 +11,18 @@ import javax.validation.constraints.Size;
 public class UserRegistrationDTO {
 
 
-    @NotBlank
-    @Size(min = 5 , max = 20)
+    @NotBlank(message = "Username should be provided.")
+    @Size(min = 5 , max = 20 , message = "Username must be between 5 and 20 characters")
+    @UniqueUsername(message = "Username should be unique.")
     private String username;
 
     @NotBlank
     @Size(min = 5 , max = 30)
     private String fullName;
 
-    @NotBlank
-    @Email
+    @NotBlank(message = "User email should be provided.")
+    @Email(message = "User email should be valid.")
+    @UniqueUserEmail(message = "User email should be unique.")
     private String email;
 
     @NotBlank
