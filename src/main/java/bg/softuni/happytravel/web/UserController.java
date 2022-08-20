@@ -18,12 +18,12 @@ import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
-public class UserRegistrationController {
+public class UserController {
 
     private UserService userService;
 
     @Autowired
-    public UserRegistrationController(UserService userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
@@ -50,7 +50,7 @@ public class UserRegistrationController {
 
             return "redirect:/register";
         }
-        
+
             this.userService.register(userRegistrationDTO);
 
         return "redirect:/login";

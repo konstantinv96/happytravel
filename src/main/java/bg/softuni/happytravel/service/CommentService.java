@@ -19,9 +19,9 @@ import java.util.stream.Collectors;
 @Service
 public class CommentService {
 
-    private OfferRepository offerRepository;
-    private CommentRepository commentRepository;
-    private UserRepository userRepository;
+    private final OfferRepository offerRepository;
+    private final CommentRepository commentRepository;
+    private final UserRepository userRepository;
 
     public CommentService(OfferRepository offerRepository,
                           CommentRepository commentRepository, UserRepository userRepository) {
@@ -44,16 +44,21 @@ public class CommentService {
 
         UserEntity author = userRepository.findByUsername(commentDTO.getUsername()).get();
 
+        Comment comment = createNewComment(commentDTO, author);
+
+        commentRepository.save(comment);
+
+        return new CommentDisplayView(comment.getId(),author.getFullName(),comment.getText());
+        //
+    }
+
+    private Comment createNewComment(CommentCreationDTO commentDTO, UserEntity author) {
         Comment comment = new Comment();
         comment.setCreated(LocalDateTime.now());
         comment.setOffer(offerRepository.getById(commentDTO.getOfferId()));
         comment.setAuthor(author);
         comment.setApproved(true);
         comment.setText(commentDTO.getMessage());
-
-        commentRepository.save(comment);
-
-        return new CommentDisplayView(comment.getId(),author.getFullName(),comment.getText());
-        //
+        return comment;
     }
 }

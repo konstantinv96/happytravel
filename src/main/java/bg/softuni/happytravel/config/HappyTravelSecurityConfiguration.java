@@ -25,12 +25,12 @@ public class HappyTravelSecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
         http.
                 authorizeRequests().requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .antMatchers("/").permitAll()
-                .antMatchers("/login" , "/register").anonymous()
-                .antMatchers("/profile" , "/api/**","offers/**").authenticated()
+                .antMatchers("/maintenance").permitAll()
+                .antMatchers("/login" , "/register" , "/about").anonymous()
+                .antMatchers("/profile" , "offers/**").authenticated()
                 .antMatchers("/offers/add").authenticated()
                 .and()
                 .formLogin()
@@ -45,6 +45,8 @@ public class HappyTravelSecurityConfiguration {
                 .logoutSuccessUrl("/")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID");
+
+
 
 
 

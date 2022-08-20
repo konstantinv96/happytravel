@@ -38,13 +38,18 @@ public class UserService {
             throw new RuntimeException("email.used");
         }
 
+        UserEntity user = createUser(registrationDTO);
+
+        this.userRepository.save(user);
+    }
+
+    private UserEntity createUser(UserRegistrationDTO registrationDTO) {
         UserEntity user = new UserEntity(
                 registrationDTO.getUsername(),
                 passwordEncoder.encode(registrationDTO.getPassword()),
                 registrationDTO.getEmail(),
                 registrationDTO.getFullName());
-
-        this.userRepository.save(user);
+        return user;
     }
 
     public UserEntity getUser (String username){

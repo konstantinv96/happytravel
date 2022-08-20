@@ -21,47 +21,28 @@ import java.util.stream.Collectors;
 @Service
 public class OfferService {
 
-    private OfferRepository offerRepository;
-    private UserRepository userRepository;
+    private final OfferRepository offerRepository;
+    private final UserRepository userRepository;
 
     public OfferService(OfferRepository offerRepository, UserRepository userRepository) {
         this.offerRepository = offerRepository;
         this.userRepository = userRepository;
     }
 
-    public List<OfferIndexView> getAllOffers(){
+    public List<OfferIndexView> getAllOffers() {
 
-        return offerRepository.findAll().stream().map(offer -> new OfferIndexView(
-                offer.getId(),
-                offer.getName(),offer.getOvernightStays(),offer.getCheckInDate(),
-                offer.getReturnDate(),offer.getPrice(),offer.getImageUrl(),offer.getCountry(),
-                offer.getAgencyName().getFullName())).collect(Collectors.toList());
+        return offerRepository.findAll().stream().map(OfferService::getOfferIndexView).collect(Collectors.toList());
 
     }
 
-    public Optional<OfferDetailsView> getOffer(Long id){
+    public Optional<OfferDetailsView> getOffer(Long id) {
 
-        return offerRepository.findById(id).map(offer -> new OfferDetailsView(
-                offer.getId(),offer.getCountry(),offer.getCity(),
-                offer.getPrice(),offer.getName(),offer.getOvernightStays(),
-                offer.getImageUrl(),offer.getTransportType(),
-                offer.getCheckInDate(),offer.getReturnDate(),
-                offer.getDescription(),offer.getPictures().stream().map(Picture::getUrl).collect(Collectors.toList())));
+        return offerRepository.findById(id).map(OfferService::getOfferDetailsView);
     }
 
-    public void addOffer(AddOfferDTO addOfferDTO , UserDetails userDetails){
+    public void addOffer(AddOfferDTO addOfferDTO, UserDetails userDetails) {
 
-        Offer offer = new Offer(addOfferDTO.getCountry()
-                                ,addOfferDTO.getCity()
-                                ,addOfferDTO.getPrice(),addOfferDTO.getName(),
-                                addOfferDTO.getOvernightStays(),
-                                addOfferDTO.getImageUrl(),
-                                addOfferDTO.getTransportType(),
-                                addOfferDTO.getCheckInDate(),
-                                addOfferDTO.getReturnDate(),
-                                addOfferDTO.getDescription(),
-                                addOfferDTO.getPictureUrls()
-                                );
+        Offer offer = createOffer(addOfferDTO);
 
         UserEntity agencyName = userRepository.findByUsername(userDetails.getUsername()).orElseThrow();
 
@@ -70,30 +51,21 @@ public class OfferService {
 
     }
 
-    public List<OfferIndexView> searchOffer(SearchOfferDTO searchOfferDTO){
+    public List<OfferIndexView> searchOffer(SearchOfferDTO searchOfferDTO) {
         return this.offerRepository.findAll(new OfferSpecification(searchOfferDTO))
                 .stream()
-                    .map(offer ->new OfferIndexView(
-                            offer.getId(),
-                            offer.getName(),
-                            offer.getOvernightStays(),
-                            offer.getCheckInDate(),
-                            offer.getReturnDate(),
-                            offer.getPrice(),
-                            offer.getImageUrl(),
-                            offer.getCountry(),
-                            offer.getAgencyName().getFullName())).collect(Collectors.toList());
+                .map(OfferService::getOfferIndexView).collect(Collectors.toList());
     }
 
-    public void deleteOfferById(Long offerId){
+    public void deleteOfferById(Long offerId) {
 
         offerRepository.deleteById(offerId);
 
 
     }
 
-    public boolean isOwner(String userName , Long offerId){
-        boolean isOwner =  offerRepository.findById(offerId).filter(o -> o.getAgencyName()
+    public boolean isOwner(String userName, Long offerId) {
+        boolean isOwner = offerRepository.findById(offerId).filter(o -> o.getAgencyName()
                 .getEmail().equals(userName)).isPresent();
 
         if (isOwner) {
@@ -105,9 +77,45 @@ public class OfferService {
 
     }
 
-    private boolean isAdmin(UserEntity user){
+    private boolean isAdmin(UserEntity user) {
 
         return user.getRoles().stream().anyMatch(r -> r.getName() == UserRoles.ADMIN);
+    }
+
+    private static OfferIndexView getOfferIndexView(Offer offer) {
+        return new OfferIndexView(
+                offer.getId(),
+                offer.getName(),
+                offer.getOvernightStays(),
+                offer.getCheckInDate(),
+                offer.getReturnDate(),
+                offer.getPrice(),
+                offer.getImageUrl(),
+                offer.getCountry(),
+                offer.getAgencyName().getFullName());
+    }
+
+    private static Offer createOffer(AddOfferDTO addOfferDTO) {
+        return new Offer(addOfferDTO.getCountry()
+                , addOfferDTO.getCity()
+                , addOfferDTO.getPrice(), addOfferDTO.getName(),
+                addOfferDTO.getOvernightStays(),
+                addOfferDTO.getImageUrl(),
+                addOfferDTO.getTransportType(),
+                addOfferDTO.getCheckInDate(),
+                addOfferDTO.getReturnDate(),
+                addOfferDTO.getDescription(),
+                addOfferDTO.getPictureUrls()
+        );
+    }
+
+    private static OfferDetailsView getOfferDetailsView(Offer offer) {
+        return new OfferDetailsView(
+                offer.getId(), offer.getCountry(), offer.getCity(),
+                offer.getPrice(), offer.getName(), offer.getOvernightStays(),
+                offer.getImageUrl(), offer.getTransportType(),
+                offer.getCheckInDate(), offer.getReturnDate(),
+                offer.getDescription(), offer.getPictures().stream().map(Picture::getUrl).collect(Collectors.toList()));
     }
 
 }

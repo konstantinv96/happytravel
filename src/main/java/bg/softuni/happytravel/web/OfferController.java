@@ -26,7 +26,7 @@ import java.util.List;
 @Controller
 public class OfferController {
 
-    private OfferService offerService;
+    private final OfferService offerService;
 
     public OfferController(OfferService offerService) {
         this.offerService = offerService;
