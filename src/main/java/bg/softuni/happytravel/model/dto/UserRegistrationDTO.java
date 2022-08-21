@@ -1,5 +1,6 @@
 package bg.softuni.happytravel.model.dto;
 
+import bg.softuni.happytravel.model.validation.FieldMatch;
 import bg.softuni.happytravel.model.validation.UniqueUserEmail;
 import bg.softuni.happytravel.model.validation.UniqueUsername;
 
@@ -8,6 +9,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+@FieldMatch(
+        first = "password",
+        second = "confirmPassword",
+        message = "Passwords do not match."
+)
 public class UserRegistrationDTO {
 
 

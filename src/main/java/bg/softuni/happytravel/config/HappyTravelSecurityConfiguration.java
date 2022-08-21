@@ -27,10 +27,10 @@ public class HappyTravelSecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.
                 authorizeRequests().requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                .antMatchers("/").permitAll()
+                .antMatchers("/" , "offers/**").permitAll()
                 .antMatchers("/maintenance").permitAll()
                 .antMatchers("/login" , "/register" , "/about").anonymous()
-                .antMatchers("/profile" , "offers/**").authenticated()
+                .antMatchers("/profile").authenticated()
                 .antMatchers("/offers/add").authenticated()
                 .and()
                 .formLogin()

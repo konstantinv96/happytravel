@@ -118,4 +118,8 @@ public class OfferService {
                 offer.getDescription(), offer.getPictures().stream().map(Picture::getUrl).collect(Collectors.toList()));
     }
 
+    public Long countOffers() {
+        Long offersCount = offerRepository.count();
+        return offersCount;
+    }
 }

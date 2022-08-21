@@ -1,5 +1,6 @@
 package bg.softuni.happytravel.service;
 
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -11,6 +12,7 @@ import java.time.LocalTime;
 public class MaintenanceInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+
 
         var requestURI = request.getRequestURI();
         if (!requestURI.equals("/maintenance")) {
